@@ -1,64 +1,70 @@
-'use client';
+"use client";
 
-import { usePathname, useRouter } from 'next/navigation';
-import type React from 'react';
-import { useEffect, useState } from 'react';
-import { getAuthSession } from './action';
+import { usePathname, useRouter } from "next/navigation";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { getAuthSession } from "./action";
 
 interface AuthGuardProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function AuthGuard({ children }: AuthGuardProps) {
-	const router = useRouter();
-	const pathname = usePathname();
-	const [isChecking, setIsChecking] = useState(true);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isChecking, setIsChecking] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-	useEffect(() => {
-		const checkAuth = () => {
-			// Public routes that don't require authentication
-			const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
-			const isPublicRoute = publicRoutes.includes(pathname) || pathname.startsWith('/auth');
+  useEffect(() => {
+    const checkAuth = () => {
+      // Public routes that don't require authentication
+      const publicRoutes = [
+        "/",
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+      ];
+      const isPublicRoute =
+        publicRoutes.includes(pathname) || pathname.startsWith("/auth");
 
-			if (isPublicRoute) {
-				setIsAuthenticated(true);
-				setIsChecking(false);
-				
-return;
-			}
+      if (isPublicRoute) {
+        setIsAuthenticated(true);
+        setIsChecking(false);
 
-			// Check sessionStorage for auth token
-			getAuthSession().then((session) => {
-				// console.log('session', session)
-				if (!session) {
-					console.log('No valid token found, redirecting to signin...');
-					router.push('/login');
-					
-return;
-				}
+        return;
+      }
 
-				setIsAuthenticated(true);
-				setIsChecking(false);
-			});
-		};
+      // Check sessionStorage for auth token
+      getAuthSession().then((session) => {
+        // console.log('session', session)
+        if (!session) {
+          console.log("No valid token found, redirecting to signin...");
+          router.push("/login");
+          return;
+        }
 
-		checkAuth();
-	}, [pathname, router]);
+        setIsAuthenticated(true);
+        setIsChecking(false);
+      });
+    };
 
-	// Show loading state while checking auth
-	if (isChecking) {
-		return (
-			<div className="flex min-h-screen items-center justify-center">
-				<div className="size-8 animate-spin rounded-full border-b-2 border-primary"></div>
-			</div>
-		);
-	}
+    checkAuth();
+  }, [pathname, router]);
 
-	// If not authenticated and on protected route, don't render children
-	if (!isAuthenticated) {
-		return null;
-	}
+  // Show loading state while checking auth
+  if (isChecking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
-	return <>{children}</>;
+  // If not authenticated and on protected route, don't render children
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return <>{children}</>;
 }

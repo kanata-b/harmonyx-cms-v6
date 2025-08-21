@@ -1,4 +1,32 @@
-dist
-coverage
-node_modules
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Environment files
+.env*
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.turbo/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Package manager lock files
+package-lock.json
+yarn.lock
 pnpm-lock.yaml

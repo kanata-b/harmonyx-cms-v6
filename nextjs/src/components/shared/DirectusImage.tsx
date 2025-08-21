@@ -1,23 +1,29 @@
-import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
-import Image, { ImageProps } from 'next/image';
+import { getDirectusAssetURL } from "@/lib/directus/directus-utils";
+import Image, { ImageProps } from "next/image";
 
-export interface DirectusImageProps extends Omit<ImageProps, 'src'> {
-	uuid: string;
+export interface DirectusImageProps extends Omit<ImageProps, "src"> {
+  uuid: string;
 }
 
-const DirectusImage = ({ uuid, alt, width, height, ...rest }: DirectusImageProps) => {
-	const src = getDirectusAssetURL(uuid);
+const DirectusImage = ({
+  uuid,
+  alt,
+  width,
+  height,
+  ...rest
+}: DirectusImageProps) => {
+  const src = getDirectusAssetURL(uuid);
 
-	return (
-		<Image
-			src={src}
-			alt={alt}
-			width={width}
-			height={height}
-			unoptimized={process.env.NODE_ENV === 'production'}
-			{...rest}
-		/>
-	);
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      unoptimized={process.env.NODE_ENV === "production"}
+      {...rest}
+    />
+  );
 };
 
 export default DirectusImage;

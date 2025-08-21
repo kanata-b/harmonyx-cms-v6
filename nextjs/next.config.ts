@@ -1,15 +1,11 @@
 import "./env.mjs";
 import type { NextConfig } from 'next';
-import initializeBundleAnalyzer from '@next/bundle-analyzer';
 import { generateRedirects } from './src/lib/redirects';
 
 const createNextIntlPlugin = require('next-intl/plugin');
  
 const withNextIntl = createNextIntlPlugin();
 
-const withBundleAnalyzer = initializeBundleAnalyzer({
-	enabled: process.env.BUNDLE_ANALYZER_ENABLED === 'true',
-});
 
 const ContentSecurityPolicy = `
     default-src 'self';
@@ -98,4 +94,4 @@ const nextConfig: NextConfig = {
 	},
 };
 
-export default withBundleAnalyzer(withNextIntl(nextConfig));
+export default withNextIntl(nextConfig);
