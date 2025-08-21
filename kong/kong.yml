@@ -7,6 +7,8 @@ services:
       - name: directus-route
         paths:
           - /cms
+        strip_path: true
+        regex_priority: 100
     plugins:
       - name: cors
         config:
@@ -30,6 +32,12 @@ services:
       - name: nextjs-route
         paths:
           - /frontend
+        strip_path: true
+      - name: nextjs-root
+        paths:
+          - /
+        strip_path: false
+        regex_priority: 0
     plugins:
       - name: cors
         config:

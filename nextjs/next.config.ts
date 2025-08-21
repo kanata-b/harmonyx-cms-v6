@@ -20,7 +20,7 @@ const ContentSecurityPolicy = `
     media-src *;
     connect-src *;
     font-src 'self' data:;
-    frame-ancestors 'self' http://localhost:3000 ${process.env.NEXT_PUBLIC_DIRECTUS_URL};
+    frame-ancestors 'self' ${process.env.NEXT_PUBLIC_SITE_URL} ${process.env.NEXT_PUBLIC_DIRECTUS_URL};
 `;
 
 const nextConfig: NextConfig = {
@@ -59,7 +59,7 @@ const nextConfig: NextConfig = {
 				protocol: 'http',
 				hostname: 'localhost',
 				port: '8000',
-				pathname: '/assets/**',
+				pathname: '/cms/assets/**',
 			},
 			{
 				protocol: 'http',

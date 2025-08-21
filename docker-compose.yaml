@@ -169,6 +169,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    env_file:
+      - ./nextjs/.env
+    # environment:
+    #   - DIRECTUS_URL=http://directus:8055
+    #   - NEXT_PUBLIC_DIRECTUS_URL=http://localhost:8000/cms
+    #   - DIRECTUS_ASSET_URL=http://directus:8055  
+    #   - NEXT_PUBLIC_DIRECTUS_ASSET_URL=http://localhost:8000/cms
+    #   - DIRECTUS_PUBLIC_TOKEN=${DIRECTUS_PUBLIC_TOKEN}
+    #   - DIRECTUS_FORM_TOKEN=${DIRECTUS_FORM_TOKEN}
+    #   - NEXT_PUBLIC_SITE_URL=http://localhost:8000
+    #   - NODE_ENV=production
     depends_on:
       database:
         condition: service_healthy
