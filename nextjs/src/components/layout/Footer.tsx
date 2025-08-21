@@ -28,7 +28,7 @@ interface FooterProps {
 }
 
 const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, ref) => {
-	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_ASSET_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 

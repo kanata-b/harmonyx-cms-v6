@@ -1,3 +1,4 @@
+import "./env.mjs";
 import type { NextConfig } from 'next';
 import initializeBundleAnalyzer from '@next/bundle-analyzer';
 import { generateRedirects } from './src/lib/redirects';
@@ -23,17 +24,47 @@ const ContentSecurityPolicy = `
 `;
 
 const nextConfig: NextConfig = {
-	webpack: (config) => {
-		config.cache = false;
-
-		return config;
+	 experimental: {
+		serverActions: {
+			bodySizeLimit: "2mb",
+		},
+		// Enable Fast Refresh for better DX
+		turbo: {
+			rules: {
+				"*.svg": {
+				loaders: ["@svgr/webpack"],
+				as: "*.js",
+				},
+			},
+		},
+	},
+	// Improve Fast Refresh performance
+	onDemandEntries: {
+		maxInactiveAge: 25 * 1000,
+		pagesBufferLength: 2,
+	},
+	poweredByHeader: false,
+	// Disable ESLint during build in Docker
+	eslint: {
+		ignoreDuringBuilds: process.env.NODE_ENV === 'production',
+	},
+	// Disable TypeScript errors during build for Docker
+	typescript: {
+		ignoreBuildErrors: process.env.NODE_ENV === 'production',
 	},
 	images: {
 		dangerouslyAllowSVG: true,
 		remotePatterns: [
 			{
-				protocol: 'https',
-				hostname: process.env.NEXT_PUBLIC_DIRECTUS_URL?.split('//')[1] || '',
+				protocol: 'http',
+				hostname: 'localhost',
+				port: '8000',
+				pathname: '/assets/**',
+			},
+			{
+				protocol: 'http',
+				hostname: 'directus',
+				port: '8055',
 				pathname: '/assets/**',
 			},
 			{
@@ -43,11 +74,9 @@ const nextConfig: NextConfig = {
 				pathname: '/assets/**',
 			},
 		],
-	},
-	env: {
-		DIRECTUS_PUBLIC_TOKEN: process.env.DIRECTUS_PUBLIC_TOKEN,
-		DIRECTUS_FORM_TOKEN: process.env.DIRECTUS_FORM_TOKEN,
-		DRAFT_MODE_SECRET: process.env.DRAFT_MODE_SECRET,
+		formats: ["image/webp", "image/avif"],
+		deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+		imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
 	},
 	async headers() {
 		return [

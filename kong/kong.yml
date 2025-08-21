@@ -1,0 +1,45 @@
+_format_version: "3.0"
+
+services:
+  - name: directus-service
+    url: http://directus:8055
+    routes:
+      - name: directus-route
+        paths:
+          - /cms
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"
+          methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          headers:
+            - Authorization
+            - Content-Type
+          credentials: true
+
+  - name: nextjs-service
+    url: http://nextjs:3000
+    routes:
+      - name: nextjs-route
+        paths:
+          - /frontend
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*"
+          methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          credentials: true

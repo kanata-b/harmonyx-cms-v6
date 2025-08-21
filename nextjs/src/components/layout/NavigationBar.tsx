@@ -28,7 +28,7 @@ interface NavigationBarProps {
 const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
-	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_ASSET_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
@@ -47,6 +47,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
 						height={100}
 						className="w-[120px] h-auto dark:hidden"
 						priority
+						unoptimized
 					/>
 					{darkLogoUrl && (
 						<Image
@@ -56,6 +57,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
 							height={100}
 							className="w-[120px] h-auto hidden dark:block"
 							priority
+							unoptimized
 						/>
 					)}
 				</Link>

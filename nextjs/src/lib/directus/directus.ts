@@ -30,7 +30,10 @@ const fetchRetry = async (count: number, ...args: Parameters<typeof fetch>) => {
 // Queue for rate-limited requests
 const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCount: true });
 
-const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL as string;
+// Use different URLs for server-side vs client-side
+const directusUrl = typeof window === 'undefined' 
+	? (process.env.DIRECTUS_URL || process.env.NEXT_PUBLIC_DIRECTUS_URL) as string
+	: process.env.NEXT_PUBLIC_DIRECTUS_URL as string;
 
 const directus = createDirectus<Schema>(directusUrl, {
 	globals: {

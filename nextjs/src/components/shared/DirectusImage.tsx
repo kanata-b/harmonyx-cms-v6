@@ -8,7 +8,16 @@ export interface DirectusImageProps extends Omit<ImageProps, 'src'> {
 const DirectusImage = ({ uuid, alt, width, height, ...rest }: DirectusImageProps) => {
 	const src = getDirectusAssetURL(uuid);
 
-	return <Image src={src} alt={alt} width={width} height={height} {...rest} />;
+	return (
+		<Image 
+			src={src} 
+			alt={alt} 
+			width={width} 
+			height={height} 
+			unoptimized={process.env.NODE_ENV === 'production'}
+			{...rest} 
+		/>
+	);
 };
 
 export default DirectusImage;
