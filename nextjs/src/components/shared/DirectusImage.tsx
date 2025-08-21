@@ -9,13 +9,13 @@ const DirectusImage = ({ uuid, alt, width, height, ...rest }: DirectusImageProps
 	const src = getDirectusAssetURL(uuid);
 
 	return (
-		<Image 
-			src={src} 
-			alt={alt} 
-			width={width} 
-			height={height} 
+		<Image
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
 			unoptimized={process.env.NODE_ENV === 'production'}
-			{...rest} 
+			{...rest}
 		/>
 	);
 };

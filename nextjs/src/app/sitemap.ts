@@ -45,7 +45,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		return [...pageUrls, ...postUrls];
 	} catch (error) {
 		console.error('Error generating sitemap:', error);
-		// Return empty sitemap instead of throwing error during build
 		return [
 			{
 				url: siteUrl,

@@ -11,13 +11,12 @@
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
     "type-check": "pnpm -r type-check",
+    "format": "pnpm -r format",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:build": "docker compose up -d --build",
     "docker:logs": "docker compose logs -f",
-    "kong:setup": "./kong/setup-kong-database.bat",
-    "workspace:list": "pnpm -r list",
-    "workspace:update": "pnpm update -r"
+    "kong:setup": "./kong/setup-kong-database.bat"
   },
   "directus:template": {
     "name": "HarmonyX CMS v6",
