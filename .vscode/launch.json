@@ -1,0 +1,58 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "🐳 Debug Next.js in Docker",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/nextjs",
+      "remoteRoot": "/app",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "restart": true
+    },
+    {
+      "name": "🔧 Attach to Directus",
+      "type": "node",
+      "request": "attach",
+      "port": 9230,
+      "address": "localhost",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "restart": true
+    },
+    {
+      "name": "⚛️ Debug Next.js (Local Dev)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/nextjs/node_modules/next/dist/bin/next",
+      "args": [
+        "dev",
+        "-p",
+        "3001"
+      ],
+      "cwd": "${workspaceFolder}/nextjs",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🚀 Debug All Services",
+      "configurations": [
+        "🐳 Debug Next.js in Docker",
+        "🔧 Attach to Directus"
+      ]
+    }
+  ]
+}

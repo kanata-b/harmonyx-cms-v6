@@ -1,5 +1,5 @@
 # Dependencies
-node_modules/
+node_modules/*
 
 # General Logs
 logs/
@@ -40,4 +40,26 @@ Thumbs.db
 
 # IDE / Editor Configs
 .idea
-.vscode
+# .vscode (Keep VS Code workspace settings for sharing)
+
+# Docker data directories (keep structure but not data)
+directus/data/database/
+kong/data/database/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# VS Code specific ignores
+.vscode/settings.json.bak

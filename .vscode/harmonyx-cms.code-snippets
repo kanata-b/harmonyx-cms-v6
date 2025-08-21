@@ -1,0 +1,83 @@
+{
+  "Docker Compose Service": {
+    "prefix": "dc-service",
+    "body": [
+      "  ${1:service-name}:",
+      "    image: ${2:image-name}",
+      "    container_name: ${3:container-name}",
+      "    ports:",
+      "      - \"${4:host-port}:${5:container-port}\"",
+      "    environment:",
+      "      - ${6:ENV_VAR}=${7:value}",
+      "    depends_on:",
+      "      ${8:dependency}:",
+      "        condition: service_healthy",
+      "    healthcheck:",
+      "      test: [\"CMD\", \"${9:health-command}\"]",
+      "      interval: 30s",
+      "      timeout: 10s",
+      "      retries: 3",
+      "    restart: unless-stopped",
+      "    networks:",
+      "      - ${10:network-name}",
+      "$0"
+    ],
+    "description": "Docker Compose service template"
+  },
+  "Kong Service": {
+    "prefix": "kong-service",
+    "body": [
+      "curl -i -X POST http://localhost:8001/services \\",
+      "  --data \"name=${1:service-name}\" \\",
+      "  --data \"url=${2:http://service:port}\"",
+      "$0"
+    ],
+    "description": "Create Kong service via API"
+  },
+  "Kong Route": {
+    "prefix": "kong-route",
+    "body": [
+      "curl -i -X POST http://localhost:8001/services/${1:service-name}/routes \\",
+      "  --data \"name=${2:route-name}\" \\",
+      "  --data \"paths[]=${3:/path}\" \\",
+      "  --data \"strip_path=${4:true}\" \\",
+      "  --data \"regex_priority=${5:0}\"",
+      "$0"
+    ],
+    "description": "Create Kong route via API"
+  },
+  "Kong Plugin": {
+    "prefix": "kong-plugin",
+    "body": [
+      "curl -i -X POST http://localhost:8001/services/${1:service-name}/plugins \\",
+      "  --data \"name=${2:plugin-name}\" \\",
+      "  --data \"config.${3:key}=${4:value}\"",
+      "$0"
+    ],
+    "description": "Add Kong plugin via API"
+  },
+  "Environment Variables": {
+    "prefix": "env-vars",
+    "body": [
+      "# === ${1:Section Name} ===",
+      "${2:VARIABLE_NAME}=${3:value}",
+      "${4:ANOTHER_VARIABLE}=${5:another_value}",
+      "",
+      "$0"
+    ],
+    "description": "Environment variables section"
+  },
+  "Health Check": {
+    "prefix": "healthcheck",
+    "body": [
+      "healthcheck:",
+      "  test: [\"CMD\", \"${1:command}\", \"${2:args}\"]",
+      "  interval: ${3:30s}",
+      "  timeout: ${4:10s}",
+      "  retries: ${5:3}",
+      "  start_period: ${6:40s}",
+      "$0"
+    ],
+    "description": "Docker healthcheck configuration"
+  }
+}

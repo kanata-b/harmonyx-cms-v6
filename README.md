@@ -82,39 +82,6 @@ graph TB
 | **Cache** | Redis | 6 | Session & content caching |
 | **Container** | Docker Compose | - | Service orchestration |
 
-## 🌐 Service Endpoints
-
-| URL | Service | Description |
-|-----|---------|-------------|
-| `http://localhost:8000/` | Next.js Frontend | Main website |
-| `http://localhost:8000/cms/` | Directus CMS | API & Admin panel |
-| `http://localhost:8000/cms/admin` | Directus Admin | Content management |
-| `http://localhost:8001/` | Kong Admin | Gateway configuration |
-
-## 🛠️ Quick Setup
-
-### Prerequisites
-- Docker & Docker Compose
-- Git
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/kanata-b/harmonyx-cms-v6.git
-cd harmonyx-cms-v6
-```
-
-2. **Start all services**
-```bash
-docker compose up -d
-```
-
-3. **Access the services**
-- **Website**: http://localhost:8000
-- **CMS Admin**: http://localhost:8000/cms/admin  
-- **Admin credentials**: `admin@example.com` / `d1r3ctu5`
-
 ## 📁 Project Structure
 
 ```
@@ -131,28 +98,6 @@ harmonyx-cms-v6/
     ├── data/                # Database storage  
     ├── uploads/             # File uploads
     └── extensions/          # Custom extensions
-```
-
-## 🔧 Development Commands
-
-```bash
-# Start all services
-docker compose up -d
-
-# View logs
-docker compose logs -f [service_name]
-
-# Restart specific service
-docker compose restart [service_name]
-
-# Stop all services
-docker compose down
-
-# Rebuild and restart
-docker compose up -d --build
-
-# Access service shell
-docker compose exec [service_name] sh
 ```
 
 ## 🛡️ Production Features

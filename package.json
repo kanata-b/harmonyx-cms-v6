@@ -1,37 +1,45 @@
 {
-  "name": "directus-cms-starter",
-  "version": "1.0.0",
-  "description": "",
+  "name": "harmonyx-cms-v6",
+  "version": "6.0.0",
+  "private": true,
+  "description": "HarmonyX CMS v6 - Modern CMS with Next.js, Directus, and Kong API Gateway",
+  "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter simple-cms-nextjs dev",
+    "build": "pnpm -r build",
+    "start": "pnpm -r start",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "type-check": "pnpm -r type-check",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:build": "docker compose up -d --build",
+    "docker:logs": "docker compose logs -f",
+    "kong:setup": "./kong/setup-kong-database.bat",
+    "workspace:list": "pnpm -r list",
+    "workspace:update": "pnpm update -r"
   },
   "directus:template": {
-    "name": "CMS",
-    "description": "A ready-to-use CMS with block builder, visual editing, and integration with your favorite framework. ",
+    "name": "HarmonyX CMS v6",
+    "description": "A ready-to-use CMS with Kong API Gateway, Next.js frontend, and Directus backend",
     "template": "./directus/template",
     "frontends": {
       "nextjs": {
         "name": "Next.js",
         "path": "./nextjs"
-      },
-      "nuxt": {
-        "name": "Nuxt",
-        "path": "./nuxt"
-      },
-      "astro": {
-        "name": "Astro",
-        "path": "./astro"
-      },
-      "svelte": {
-        "name": "Svelte",
-        "path": "./sveltekit"
       }
     }
   },
-  "keywords": [],
-  "author": "",
-  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b",
-  "dependencies": {
-    "@t3-oss/env-nextjs": "^0.13.8"
-  }
+  "keywords": [
+    "cms",
+    "nextjs",
+    "directus",
+    "kong",
+    "api-gateway",
+    "headless-cms",
+    "monorepo",
+    "pnpm-workspace"
+  ],
+  "author": "HarmonyX Team",
+  "license": "MIT"
 }
