@@ -2,75 +2,6 @@
 name: harmonyx-cms-full
 
 services:
-  # Kong Database (separate from Directus DB)
-  kong-db:
-    image: postgres:15-alpine
-    container_name: kong-db
-    volumes:
-      - ./kong/data/database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: ${KONG_PG_USER}
-      POSTGRES_PASSWORD: ${KONG_PG_PASSWORD}
-      POSTGRES_DB: ${KONG_PG_DATABASE}
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "kong", "-d", "kong", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - kong-net
-
-  # Kong Migration (run once to setup database)
-  kong-migration:
-    image: kong:3.7
-    depends_on:
-      kong-db:
-        condition: service_healthy
-    environment:
-      KONG_DATABASE: ${KONG_DATABASE}
-      KONG_PG_HOST: ${KONG_PG_HOST}
-      KONG_PG_USER: ${KONG_PG_USER}
-      KONG_PG_PASSWORD: ${KONG_PG_PASSWORD}
-      KONG_PG_DATABASE: ${KONG_PG_DATABASE}
-    command: kong migrations bootstrap
-    restart: on-failure
-    networks:
-      - kong-net
-
-  # Kong API Gateway
-  kong:
-    image: kong:3.7
-    depends_on:
-      kong-db:
-        condition: service_healthy
-      kong-migration:
-        condition: service_completed_successfully
-    environment:
-      KONG_DATABASE: ${KONG_DATABASE}
-      KONG_PG_HOST: ${KONG_PG_HOST}
-      KONG_PG_USER: ${KONG_PG_USER}
-      KONG_PG_PASSWORD: ${KONG_PG_PASSWORD}
-      KONG_PG_DATABASE: ${KONG_PG_DATABASE}
-      KONG_PROXY_ACCESS_LOG: /dev/stdout
-      KONG_ADMIN_ACCESS_LOG: /dev/stdout
-      KONG_PROXY_ERROR_LOG: /dev/stderr
-      KONG_ADMIN_ERROR_LOG: /dev/stderr
-      KONG_ADMIN_LISTEN: ${KONG_ADMIN_LISTEN}
-      KONG_PROXY_LISTEN: ${KONG_PROXY_LISTEN}
-    ports:
-      - "8000:8000"   # Public proxy
-      - "8443:8443"   # Public proxy SSL
-      - "8001:8001"   # Admin API
-      - "8444:8444"   # Admin API SSL
-    healthcheck:
-      test: ["CMD", "kong", "health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    restart: unless-stopped
-    networks:
-      - kong-net
-      - harmonyx_network
 
   # Database for Directus
   database:
@@ -173,15 +104,6 @@ services:
       - "3000:3000"
     env_file:
       - ./nextjs/.env
-    # environment:
-    #   - DIRECTUS_URL=http://directus:8055
-    #   - NEXT_PUBLIC_DIRECTUS_URL=http://localhost:8000/cms
-    #   - DIRECTUS_ASSET_URL=http://directus:8055  
-    #   - NEXT_PUBLIC_DIRECTUS_ASSET_URL=http://localhost:8000/cms
-    #   - DIRECTUS_PUBLIC_TOKEN=${DIRECTUS_PUBLIC_TOKEN}
-    #   - DIRECTUS_FORM_TOKEN=${DIRECTUS_FORM_TOKEN}
-    #   - NEXT_PUBLIC_SITE_URL=http://localhost:8000
-    #   - NODE_ENV=production
     depends_on:
       database:
         condition: service_healthy
@@ -201,7 +123,5 @@ services:
 
 # Shared network for internal communication
 networks:
-  kong-net:
-    driver: bridge
   harmonyx_network:
     driver: bridge

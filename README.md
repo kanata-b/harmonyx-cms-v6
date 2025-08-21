@@ -100,6 +100,27 @@ harmonyx-cms-v6/
     └── extensions/          # Custom extensions
 ```
 
+## 🚀 How to Start
+
+### 1. Prepare Directus
+```bash
+pnpm docker:build
+pnpm docker:up
+npx directus-template-cli@latest apply 
+select Community
+select CMS
+```
+
+### 2. Install Dependencies
+```bash
+pnpm install
+```
+
+### 3. Start Frontend
+```bash
+pnpm dev
+```
+
 ## 🛡️ Production Features
 
 ### 🚪 Kong API Gateway

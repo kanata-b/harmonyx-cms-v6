@@ -12,20 +12,19 @@
     "lint:fix": "pnpm -r lint:fix",
     "type-check": "pnpm -r type-check",
     "format": "pnpm -r format",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:build": "docker compose up -d --build",
-    "docker:logs": "docker compose logs -f",
-    "kong:setup": "./kong/setup-kong-database.bat"
+    "docker:up": "cd apps && docker compose up -d",
+    "docker:down": "cd apps && docker compose down",
+    "docker:build": "cd apps && docker compose up -d --build",
+    "docker:logs": "cd apps && docker compose logs -f"
   },
   "directus:template": {
     "name": "HarmonyX CMS v6",
     "description": "A ready-to-use CMS with Kong API Gateway, Next.js frontend, and Directus backend",
-    "template": "./directus/template",
+    "template": "./apps/directus/template",
     "frontends": {
       "nextjs": {
         "name": "Next.js",
-        "path": "./nextjs"
+        "path": "./apps/nextjs"
       }
     }
   },

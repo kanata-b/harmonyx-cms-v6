@@ -1,0 +1,5 @@
+data/*
+uploads/*
+extensions/.registry/*
+templates/*
+.directus-template-cli/*

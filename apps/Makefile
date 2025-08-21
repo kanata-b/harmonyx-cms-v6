@@ -5,7 +5,6 @@ help: ## แสดงคำสั่งที่ใช้ได้
 	@echo "Available commands:"
 	@echo "  make setup      - เตรียม environment files"
 	@echo "  make docker     - รัน Docker"
-	@echo "  make kong-setup - ตั้งค่า Kong routes และ services (database mode)"
 	@echo "  make stop       - หยุด containers ทั้งหมด"
 	@echo "  make clean      - ลบ containers, images และ volumes"
 	@echo "  make logs       - ดู logs ของทุก services"
@@ -18,10 +17,6 @@ setup: ## เตรียม environment files
 
 docker: ## รัน docker build
 	docker-compose up -d --build
-
-kong-setup: ## ตั้งค่า Kong routes และ services (database mode)
-	@echo "Setting up Kong API Gateway..."
-	@kong/setup-kong-database.bat
 
 stop: ## หยุด containers ทั้งหมด
 	docker-compose down
