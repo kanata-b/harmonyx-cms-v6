@@ -1,29 +1,217 @@
-# Simple CMS Starter Templates
+# HarmonyX CMS v6
 
-Welcome to the **Simple CMS Starter Templates**! This repository contains front-end templates for building a simple CMS
-in different frameworks and libraries. Each subfolder represents a specific framework, offering reusable, scalable, and
-easy-to-implement CMS solutions.
+Welcome to **HarmonyX CMS v6**! A modern, scalable CMS solution built with **Next.js 15** frontend and **Directus 11** headless CMS, orchestrated through **Kong API Gateway** for production-ready microservices architecture.
 
-## **Templates**
+## 🏗️ Architecture Overview
 
-| Framework/Library | Description                                   | Links |
-| ----------------- | --------------------------------------------- |-------------- |
-| **Next.js**       | A CMS built using Next.js and its App Router. |[→ Go to Next.js Starter](./next) |
-| **Nuxt.js**       | A CMS template leveraging Nuxt.js features.   | [→ Go to Nuxt.js Starter](./nuxt) |
-| **Svelte**        | A CMS template using the Svelte framework.    | [→ Go to Svelte Starter](./svelte) |
-| **Astro**         | A CMS optimized for performance with Astro.   |[→ Go to Astro Starter](./astro) |
+```mermaid
+graph TB
+    %% External Layer
+    User[👤 User/Client]
+    Browser[🌐 Browser]
+    
+    %% Kong API Gateway Layer
+    Kong[🚪 Kong API Gateway<br/>Port 8000/8001]
+    KongConfig[📄 kong.yml<br/>Declarative Config]
+    
+    %% Application Layer  
+    NextJS[⚛️ Next.js Frontend<br/>Port 3000]
+    Directus[🔧 Directus CMS<br/>Port 8055]
+    
+    %% Data Layer
+    PostgreSQL[🗄️ PostgreSQL Database<br/>PostGIS Extension]
+    Redis[⚡ Redis Cache<br/>Port 6379]
+    
+    %% Storage
+    Uploads[📁 File Uploads<br/>./directus/uploads]
+    Extensions[🧩 Extensions<br/>./directus/extensions]
+    DBData[💾 Database Data<br/>./directus/data/database]
+    
+    %% Docker Network
+    subgraph DockerNetwork[🐳 harmonyx_network]
+        Kong
+        NextJS
+        Directus
+        PostgreSQL
+        Redis
+    end
+    
+    %% External connections
+    User --> Browser
+    Browser --> Kong
+    
+    %% Kong routing
+    Kong --> |"/ → strip_path: false"| NextJS
+    Kong --> |"/frontend → strip_path: true"| NextJS  
+    Kong --> |"/cms → strip_path: true"| Directus
+    Kong -.-> KongConfig
+    
+    %% Internal service communication
+    NextJS --> |"Server-side API calls<br/>DIRECTUS_URL=http://directus:8055"| Directus
+    NextJS -.-> |"Client-side API calls<br/>NEXT_PUBLIC_DIRECTUS_URL<br/>=http://localhost:8000/cms"| Kong
+    
+    %% Data persistence
+    Directus --> PostgreSQL
+    Directus --> Redis
+    Directus --> Uploads
+    Directus --> Extensions
+    PostgreSQL --> DBData
+    
+    %% Styling
+    classDef gateway fill:#ff9999,stroke:#333,stroke-width:3px
+    classDef app fill:#99ccff,stroke:#333,stroke-width:2px
+    classDef data fill:#99ff99,stroke:#333,stroke-width:2px
+    classDef storage fill:#ffcc99,stroke:#333,stroke-width:2px
+    classDef external fill:#f9f9f9,stroke:#333,stroke-width:1px
+    
+    class Kong gateway
+    class NextJS,Directus app
+    class PostgreSQL,Redis data
+    class Uploads,Extensions,DBData storage
+    class User,Browser external
+```
 
-## **Folder Structure**
+## 🚀 Technology Stack
 
-Each subfolder contains:
+| Component | Technology | Version | Purpose |
+|-----------|------------|---------|---------|
+| **API Gateway** | Kong | 3.7 | Request routing, CORS, SSL |
+| **Frontend** | Next.js | 15.2.4 | SSR/SSG React framework |
+| **CMS** | Directus | 11.7.2 | Headless CMS + Admin |
+| **Database** | PostgreSQL + PostGIS | 16 | Primary data storage |
+| **Cache** | Redis | 6 | Session & content caching |
+| **Container** | Docker Compose | - | Service orchestration |
 
-- **Source Code**: Framework-specific implementation of the CMS.
-- **Documentation**: Instructions on how to set up, customize, and use the template.
+## 🌐 Service Endpoints
 
-## Local Setup (with CLI)
+| URL | Service | Description |
+|-----|---------|-------------|
+| `http://localhost:8000/` | Next.js Frontend | Main website |
+| `http://localhost:8000/cms/` | Directus CMS | API & Admin panel |
+| `http://localhost:8000/cms/admin` | Directus Admin | Content management |
+| `http://localhost:8001/` | Kong Admin | Gateway configuration |
 
-Run this in your terminal:
+## 🛠️ Quick Setup
+
+### Prerequisites
+- Docker & Docker Compose
+- Git
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/kanata-b/harmonyx-cms-v6.git
+cd harmonyx-cms-v6
+```
+
+2. **Start all services**
+```bash
+docker compose up -d
+```
+
+3. **Access the services**
+- **Website**: http://localhost:8000
+- **CMS Admin**: http://localhost:8000/cms/admin  
+- **Admin credentials**: `admin@example.com` / `d1r3ctu5`
+
+## 📁 Project Structure
+
+```
+harmonyx-cms-v6/
+├── 🐳 docker-compose.yaml    # Service orchestration
+├── 🌍 .env                   # Environment variables
+├── 🚪 kong/
+│   └── kong.yml             # Kong API gateway config
+├── ⚛️ nextjs/               # Next.js frontend
+│   ├── src/
+│   ├── public/
+│   └── Dockerfile
+└── 🔧 directus/             # Directus CMS
+    ├── data/                # Database storage  
+    ├── uploads/             # File uploads
+    └── extensions/          # Custom extensions
+```
+
+## 🔧 Development Commands
 
 ```bash
-npx directus-template-cli@latest init
+# Start all services
+docker compose up -d
+
+# View logs
+docker compose logs -f [service_name]
+
+# Restart specific service
+docker compose restart [service_name]
+
+# Stop all services
+docker compose down
+
+# Rebuild and restart
+docker compose up -d --build
+
+# Access service shell
+docker compose exec [service_name] sh
 ```
+
+## 🛡️ Production Features
+
+### 🚪 Kong API Gateway
+- **Declarative Configuration**: GitOps-friendly YAML config
+- **Request Routing**: Path-based routing to services
+- **CORS Handling**: Cross-origin resource sharing
+- **Health Monitoring**: Service health checks
+- **SSL Termination**: HTTPS support ready
+
+### ⚛️ Next.js Frontend  
+- **Server-Side Rendering**: SEO-optimized pages
+- **Image Optimization**: Automatic image processing
+- **Internationalization**: Multi-language support
+- **API Routes**: Backend functionality in frontend
+- **Production Build**: Optimized static generation
+
+### 🔧 Directus CMS
+- **REST & GraphQL APIs**: Flexible data access
+- **Admin Dashboard**: User-friendly content management
+- **File Management**: Upload and asset handling
+- **Role-Based Access**: User permissions system
+- **Real-time Updates**: WebSocket support
+
+### 💾 Data Layer
+- **PostgreSQL + PostGIS**: Geospatial data support
+- **Redis Caching**: Performance optimization
+- **Data Persistence**: Docker volume mounting
+- **Health Checks**: Database monitoring
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **Services not starting**: Check Docker is running
+2. **Port conflicts**: Ensure ports 8000, 8001, 3000, 8055 are available
+3. **Database connection**: Wait for health checks to pass
+4. **Kong routing**: Restart Kong after config changes
+
+## 📚 Documentation
+
+- [Kong Documentation](https://docs.konghq.com/)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Directus Documentation](https://docs.directus.io/)
+- [Docker Compose Reference](https://docs.docker.com/compose/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes  
+4. Push to the branch
+5. Create a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**HarmonyX CMS v6** - Modern CMS with Kong API Gateway 🚀

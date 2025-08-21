@@ -9,22 +9,6 @@ services:
           - /cms
         strip_path: true
         regex_priority: 100
-    plugins:
-      - name: cors
-        config:
-          origins:
-            - "*"
-          methods:
-            - GET
-            - POST
-            - PUT
-            - PATCH
-            - DELETE
-            - OPTIONS
-          headers:
-            - Authorization
-            - Content-Type
-          credentials: true
 
   - name: nextjs-service
     url: http://nextjs:3000
@@ -38,16 +22,3 @@ services:
           - /
         strip_path: false
         regex_priority: 0
-    plugins:
-      - name: cors
-        config:
-          origins:
-            - "*"
-          methods:
-            - GET
-            - POST
-            - PUT
-            - PATCH
-            - DELETE
-            - OPTIONS
-          credentials: true
