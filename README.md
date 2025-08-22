@@ -42,7 +42,6 @@ graph TB
     
     %% Kong routing
     Kong --> |"/ → strip_path: false"| NextJS
-    Kong --> |"/frontend → strip_path: true"| NextJS  
     Kong --> |"/cms → strip_path: true"| Directus
     Kong -.-> KongConfig
     
