@@ -74,16 +74,39 @@ graph TB
 
 ```
 harmonyx-cms-v6/
-├── 🐳 docker-compose.yaml    # Service orchestration
-├── 🌍 .env                   # Environment variables
-├── ⚛️ nextjs/               # Next.js frontend
-│   ├── src/
-│   ├── public/
-│   └── Dockerfile
-└── 🔧 directus/             # Directus CMS
-    ├── data/                # Database storage  
-    ├── uploads/             # File uploads
-    └── extensions/          # Custom extensions
+├── � package.json              # Root workspace configuration
+├── 🔒 pnpm-lock.yaml           # Package lock file
+├── ⚙️ pnpm-workspace.yaml      # Workspace configuration
+├── 📖 README.md                # Project documentation
+└── 📁 apps/                    # Application services
+    ├── 🛠️ Makefile             # Build automation scripts
+    ├── 🔧 directus/            # Directus CMS Backend
+    │   ├── �🐳 docker-compose.yaml  # Directus services orchestration
+    │   ├── 🔐 .env             # Environment configuration
+    │   ├── 📊 .env.example     # Environment template
+    │   ├── 💾 data/            # PostgreSQL data volume
+    │   ├── 📁 uploads/         # File upload storage
+    │   ├── 🧩 extensions/      # Custom Directus extensions
+    │   ├── 📋 template/        # Directus template configuration
+    │   └── ⚙️ .directus-template-cli/  # Template CLI data
+    └── ⚛️ nextjs/             # Next.js Frontend
+        ├── 🐳 docker-compose.yaml  # Next.js Docker configuration
+        ├── 🐳 Dockerfile       # Next.js container definition
+        ├── 🔐 .env             # Environment variables
+        ├── � .env.example     # Environment template
+        ├── ⚙️ package.json     # Dependencies and scripts
+        ├── 📝 next.config.ts   # Next.js configuration
+        ├── 🎨 tailwind.config.ts   # Tailwind CSS setup
+        ├── 📚 tsconfig.json    # TypeScript configuration
+        ├── 🎯 components.json  # shadcn/ui components config
+        ├── 📂 src/             # Source code
+        │   ├── 📂 app/         # Next.js App Router
+        │   ├── 📂 components/  # React components
+        │   ├── 📂 lib/         # Utility libraries
+        │   ├── 📂 types/       # TypeScript definitions
+        │   └── 📂 i18n/        # Internationalization
+        ├── 📂 public/          # Static assets
+        └── 📂 .next/           # Next.js build output
 ```
 
 ## 🚀 How to Start
