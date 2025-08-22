@@ -18,7 +18,7 @@ graph TB
     Directus[🔧 Directus CMS]
     
     %% Data Layer
-    PostgreSQL[🗄️ PostgreSQL Database<br/>PostGIS Extension]
+    PostgreSQL[🗄️ PostgreSQL Database]
     Redis[⚡ Redis Cache]
     
     %% Storage
