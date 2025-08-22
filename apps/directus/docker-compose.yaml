@@ -38,19 +38,19 @@ services:
 
   # Directus CMS
   directus:
-    image: directus/directus:11.7.2
+    image: directus/directus:11.10.2
     volumes:
       - ./uploads:/directus/uploads
       - ./extensions:/directus/extensions
     ports:
       - "8055:8055"
+    env_file:
+      - .env
     depends_on:
       database:
         condition: service_healthy
       cache:
         condition: service_healthy
-    env_file:
-      - .env
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://0.0.0.0:8055/server/health"]
       interval: 30s
