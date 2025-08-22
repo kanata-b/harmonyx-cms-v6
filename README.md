@@ -26,15 +26,6 @@ graph TB
     Extensions[🧩 Extensions]
     DBData[💾 Database Data]
     
-    %% Docker Network
-    subgraph DockerNetwork[🐳 harmonyx_network]
-        Kong
-        NextJS
-        Directus
-        PostgreSQL
-        Redis
-    end
-    
     %% External connections
     User --> Browser
     Browser --> Kong
@@ -60,14 +51,12 @@ graph TB
     classDef data fill:#45B7D1,stroke:#fff,stroke-width:3px,color:#fff
     classDef storage fill:#FFA07A,stroke:#fff,stroke-width:2px,color:#333
     classDef external fill:#96CEB4,stroke:#333,stroke-width:2px,color:#333
-    classDef network fill:#E8F4FD,stroke:#007ACC,stroke-width:2px,color:#007ACC
     
     class Kong gateway
     class NextJS,Directus app
     class PostgreSQL,Redis data
     class Uploads,Extensions,DBData storage
     class User,Browser external
-    class DockerNetwork network
 ```
 
 ## 🚀 Technology Stack
