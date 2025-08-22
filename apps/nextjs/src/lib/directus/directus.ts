@@ -40,13 +40,17 @@ const directusUrl =
     ? (process.env.DIRECTUS_URL as string)
     : (process.env.NEXT_PUBLIC_DIRECTUS_URL as string);
 
-export const directus = createDirectus<Schema>(directusUrl, {
+    console.log("Directus URL:", directusUrl); // Debug log to verify URL
+
+const directus = createDirectus<Schema>(directusUrl, {
   globals: {
     fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
   },
-}).with(rest()) as RestClient<Schema>;
+}).with(rest({
+  onRequest: (options) => ({ ...options, cache: 'no-store' }),
+})) as RestClient<Schema>;
 
-export const useDirectus = () => ({
+export const directusSdk = () => ({
   directus: directus as RestClient<Schema>,
   readItems,
   readItem,

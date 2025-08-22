@@ -8,8 +8,7 @@ export function getDirectusAssetURL(
   // Use different URLs for server-side vs client-side
   const assetUrl =
     typeof window === "undefined"
-      ? process.env.DIRECTUS_ASSET_URL ||
-        process.env.NEXT_PUBLIC_DIRECTUS_ASSET_URL
+      ? process.env.DIRECTUS_ASSET_URL
       : process.env.NEXT_PUBLIC_DIRECTUS_ASSET_URL;
 
   if (typeof fileOrString === "string") {

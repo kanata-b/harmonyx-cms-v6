@@ -5,21 +5,23 @@ import {
   Redirect,
   Schema,
 } from "@/types/directus-schema";
-import { directus } from "./directus";
-import {
-  readItems,
-  aggregate,
-  readItem,
-  readSingleton,
-  withToken,
-  QueryFilter,
-} from "@directus/sdk";
+import { directusSdk } from "./directus";
+import { aggregate, QueryFilter } from "@directus/sdk";
+// import {
+//   readItems,
+//   aggregate,
+//   readItem,
+//   readSingleton,
+//   withToken,
+//   QueryFilter,
+// } from "@directus/sdk";
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
   try {
+    const { directus , readItems } = directusSdk()
     const pageData = await directus.request(
       readItems("pages", {
         filter: { permalink: { _eq: permalink } },
@@ -201,6 +203,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
  */
 export const fetchSiteData = async () => {
   try {
+    const { directus , readSingleton , readItem } = directusSdk();
     const [globals, headerNavigation, footerNavigation] = await Promise.all([
       directus.request(
         readSingleton("globals", {
@@ -270,7 +273,7 @@ export const fetchPostBySlug = async (
   options?: { draft?: boolean; token?: string }
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
   const { draft, token } = options || {};
-
+  const { directus, readItems, withToken } = directusSdk();
   try {
     const filter: QueryFilter<Schema, Post> = options?.draft
       ? { slug: { _eq: slug } }
@@ -327,6 +330,7 @@ export const fetchPostBySlug = async (
  */
 export const fetchPaginatedPosts = async (limit: number, page: number) => {
   try {
+    const { directus, readItems } = directusSdk();
     const response = await directus.request(
       readItems("posts", {
         limit,
@@ -349,6 +353,7 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
  */
 export const fetchTotalPostCount = async (): Promise<number> => {
   try {
+    const { directus } = directusSdk();
     const response = await directus.request(
       aggregate("posts", {
         aggregate: { count: "*" },
@@ -367,6 +372,7 @@ export const fetchTotalPostCount = async (): Promise<number> => {
 export async function fetchRedirects(): Promise<
   Pick<Redirect, "url_from" | "url_to" | "response_code">[]
 > {
+  const { directus, readItems } = directusSdk();
   const response = await directus.request(
     readItems("redirects", {
       filter: {

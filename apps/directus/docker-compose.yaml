@@ -40,10 +40,8 @@ services:
   directus:
     image: directus/directus:11.7.2
     volumes:
-      - directus-data:/directus/data
-      - directus-uploads:/directus/uploads
-      - directus-extensions:/directus/extensions
-      - directus-template:/directus/template
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
     ports:
       - "8055:8055"
     depends_on:
@@ -69,7 +67,3 @@ networks:
 
 volumes:
   postgres-data:
-  directus-data:
-  directus-uploads:
-  directus-extensions:
-  directus-template:
