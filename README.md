@@ -11,21 +11,20 @@ graph TB
     Browser[🌐 Browser]
     
     %% Kong API Gateway Layer
-    Kong[🚪 Kong API Gateway<br/>Port 8000/8001]
-    KongConfig[📄 kong.yml<br/>Declarative Config]
+    Kong[🚪 Kong API Gateway]
     
     %% Application Layer  
-    NextJS[⚛️ Next.js Frontend<br/>Port 3000]
-    Directus[🔧 Directus CMS<br/>Port 8055]
+    NextJS[⚛️ Next.js Frontend]
+    Directus[🔧 Directus CMS]
     
     %% Data Layer
     PostgreSQL[🗄️ PostgreSQL Database<br/>PostGIS Extension]
-    Redis[⚡ Redis Cache<br/>Port 6379]
+    Redis[⚡ Redis Cache]
     
     %% Storage
-    Uploads[📁 File Uploads<br/>./directus/uploads]
-    Extensions[🧩 Extensions<br/>./directus/extensions]
-    DBData[💾 Database Data<br/>./directus/data/database]
+    Uploads[📁 File Uploads]
+    Extensions[🧩 Extensions]
+    DBData[💾 Database Data]
     
     %% Docker Network
     subgraph DockerNetwork[🐳 harmonyx_network]
@@ -41,13 +40,12 @@ graph TB
     Browser --> Kong
     
     %% Kong routing
-    Kong --> |"/ → strip_path: false"| NextJS
-    Kong --> |"/cms → strip_path: true"| Directus
-    Kong -.-> KongConfig
+    Kong -->  NextJS
+    Kong -->  Directus
     
     %% Internal service communication
-    NextJS --> |"Server-side API calls<br/>DIRECTUS_URL=http://directus:8055"| Directus
-    NextJS -.-> |"Client-side API calls<br/>NEXT_PUBLIC_DIRECTUS_URL<br/>=http://localhost:8000/cms"| Kong
+    NextJS --> |"Server-side API calls | Directus
+    NextJS -.-> |"Client-side API calls | Kong
     
     %% Data persistence
     Directus --> PostgreSQL
