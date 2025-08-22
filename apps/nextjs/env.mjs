@@ -15,7 +15,6 @@ export const env = createEnv({
     DIRECTUS_PUBLIC_TOKEN: z.string(),
     DIRECTUS_FORM_TOKEN: z.string(),
     DRAFT_MODE_SECRET: z.string().optional(),
-    BUNDLE_ANALYZER_ENABLED: z.string().optional(),
   },
   runtimeEnv: {
     AUTH_SECRET: process.env.AUTH_SECRET,
@@ -30,7 +29,6 @@ export const env = createEnv({
     DIRECTUS_PUBLIC_TOKEN: process.env.DIRECTUS_PUBLIC_TOKEN,
     DIRECTUS_FORM_TOKEN: process.env.DIRECTUS_FORM_TOKEN,
     DRAFT_MODE_SECRET: process.env.DRAFT_MODE_SECRET,
-    BUNDLE_ANALYZER_ENABLED: process.env.BUNDLE_ANALYZER_ENABLED=true
     
   },
   emptyStringAsUndefined: true,

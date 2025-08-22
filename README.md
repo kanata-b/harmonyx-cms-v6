@@ -90,11 +90,15 @@ harmonyx-cms-v6/
 
 ### 1. Prepare Directus
 ```bash
-pnpm docker:build
-pnpm docker:up
-npx directus-template-cli@latest apply 
-select Community
+pnpm docker:directus:build
+pnpm docker:directus:up
+
+npx directus-template-cli@latest apply
+select Community template
 select CMS
+input directus url: http://localhost:8055
+select authen with email or token (you can generate admin token in http://localhost:8055/admin)
+wait until Template applied successfully
 ```
 
 ### 2. Install Dependencies
@@ -102,9 +106,15 @@ select CMS
 pnpm install
 ```
 
-### 3. Start Frontend
+### 3. Start Frontend (dev)
 ```bash
 pnpm dev
+```
+
+### 4. Start Frontend (Docker)
+```bash
+pnpm docker:cms:build
+pnpm docker:cms:up
 ```
 
 ## 🛡️ Production Features

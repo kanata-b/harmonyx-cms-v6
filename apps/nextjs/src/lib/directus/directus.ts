@@ -37,9 +37,10 @@ const queue = new Queue({
 // Use different URLs for server-side vs client-side
 const directusUrl =
   typeof window === "undefined"
-    ? ((process.env.DIRECTUS_URL ||
-        process.env.NEXT_PUBLIC_DIRECTUS_URL) as string)
+    ? (process.env.DIRECTUS_URL as string)
     : (process.env.NEXT_PUBLIC_DIRECTUS_URL as string);
+
+    console.log(directusUrl)
 
 export const directus = createDirectus<Schema>(directusUrl, {
   globals: {

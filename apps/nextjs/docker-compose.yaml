@@ -1,0 +1,27 @@
+# Main Docker Compose - รัน Directus CMS + Next.js Frontend พร้อมกัน
+name: harmonyx-cms
+
+services:
+  # Next.js Frontend
+  nextjs:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - cms_network
+
+# Shared network for internal communication
+networks:
+  cms_network:
+    driver: bridge
