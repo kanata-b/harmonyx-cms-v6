@@ -76,8 +76,6 @@ graph TB
 harmonyx-cms-v6/
 ├── 🐳 docker-compose.yaml    # Service orchestration
 ├── 🌍 .env                   # Environment variables
-├── 🚪 kong/
-│   └── kong.yml             # Kong API gateway config
 ├── ⚛️ nextjs/               # Next.js frontend
 │   ├── src/
 │   ├── public/
