@@ -57,17 +57,19 @@ graph TB
     PostgreSQL --> DBData
     
     %% Styling
-    classDef gateway fill:#ff9999,stroke:#333,stroke-width:3px
-    classDef app fill:#99ccff,stroke:#333,stroke-width:2px
-    classDef data fill:#99ff99,stroke:#333,stroke-width:2px
-    classDef storage fill:#ffcc99,stroke:#333,stroke-width:2px
-    classDef external fill:#f9f9f9,stroke:#333,stroke-width:1px
+    classDef gateway fill:#FF6B6B,stroke:#fff,stroke-width:4px,color:#fff
+    classDef app fill:#4ECDC4,stroke:#fff,stroke-width:3px,color:#fff
+    classDef data fill:#45B7D1,stroke:#fff,stroke-width:3px,color:#fff
+    classDef storage fill:#FFA07A,stroke:#fff,stroke-width:2px,color:#333
+    classDef external fill:#96CEB4,stroke:#333,stroke-width:2px,color:#333
+    classDef network fill:#E8F4FD,stroke:#007ACC,stroke-width:2px,color:#007ACC
     
     class Kong gateway
     class NextJS,Directus app
     class PostgreSQL,Redis data
     class Uploads,Extensions,DBData storage
     class User,Browser external
+    class DockerNetwork network
 ```
 
 ## 🚀 Technology Stack
