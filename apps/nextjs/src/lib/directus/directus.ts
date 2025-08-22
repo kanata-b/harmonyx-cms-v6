@@ -40,8 +40,6 @@ const directusUrl =
     ? (process.env.DIRECTUS_URL as string)
     : (process.env.NEXT_PUBLIC_DIRECTUS_URL as string);
 
-    console.log(directusUrl)
-
 export const directus = createDirectus<Schema>(directusUrl, {
   globals: {
     fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
