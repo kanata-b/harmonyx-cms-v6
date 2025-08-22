@@ -4,7 +4,17 @@ import React, { forwardRef } from "react";
 import Link from "next/link";
 import Container from "@/components/ui/container";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import { FooterNavigationItem, FooterProps } from "@/types/navigation";
+import {
+  Navigation,
+  Globals,
+  NavigationItem,
+  Page,
+} from "@/types/directus-schema";
+
+export interface FooterProps {
+  navigation: Navigation | null;
+  globals: Globals;
+}
 
 const Footer = forwardRef<HTMLElement, FooterProps>(
   ({ navigation, globals }, ref) => {
@@ -71,25 +81,27 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
             <div className="flex flex-col items-start md:items-end flex-1">
               <nav className="w-full md:w-auto text-left">
                 <ul className="space-y-4">
-                  {navigation?.items?.map((item: FooterNavigationItem) => (
-                    <li key={item.id}>
-                      {item.page?.permalink ? (
-                        <Link
-                          href={item.page.permalink}
-                          className="text-nav font-medium hover:underline"
-                        >
-                          {item.title}
-                        </Link>
-                      ) : (
-                        <a
-                          href={item.url || "#"}
-                          className="text-nav font-medium hover:underline"
-                        >
-                          {item.title}
-                        </a>
-                      )}
-                    </li>
-                  ))}
+                  {(navigation?.items as NavigationItem[]).map(
+                    (item: NavigationItem) => (
+                      <li key={item.id}>
+                        {(item.page as Page).permalink ? (
+                          <Link
+                            href={(item.page as Page).permalink}
+                            className="text-nav font-medium hover:underline"
+                          >
+                            {item.title}
+                          </Link>
+                        ) : (
+                          <a
+                            href={item.url || "#"}
+                            className="text-nav font-medium hover:underline"
+                          >
+                            {item.title}
+                          </a>
+                        )}
+                      </li>
+                    )
+                  )}
                   <ThemeToggle className="dark:text-white" />
                 </ul>
               </nav>

@@ -5,7 +5,14 @@ import { useVisualEditing } from "@/hooks/useVisualEditing";
 import { useRouter } from "next/navigation";
 import NavigationBar from "@/components/layout/NavigationBar";
 import Footer from "@/components/layout/Footer";
-import { VisualEditingLayoutProps } from "@/types/navigation";
+import { Navigation, Globals } from "@/types/directus-schema";
+
+export interface VisualEditingLayoutProps {
+  headerNavigation: Navigation | null;
+  footerNavigation: Navigation | null;
+  globals: Globals | null;
+  children: React.ReactNode;
+}
 
 export default function VisualEditingLayout({
   headerNavigation,
@@ -43,7 +50,7 @@ export default function VisualEditingLayout({
         <NavigationBar
           ref={navRef}
           navigation={headerNavigation}
-          globals={globals || {}}
+          globals={globals as Globals}
         />
       )}
       {children}
@@ -51,7 +58,7 @@ export default function VisualEditingLayout({
         <Footer
           ref={footerRef}
           navigation={footerNavigation}
-          globals={globals || {}}
+          globals={globals as Globals}
         />
       )}
     </>
