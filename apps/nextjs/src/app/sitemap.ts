@@ -1,5 +1,5 @@
-import { directus } from "@/lib/directus/directus";
-import { readItems } from "@directus/sdk";
+
+import { directusSdk } from "@/lib/directus/directus";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     throw new Error("Environment variable NEXT_PUBLIC_SITE_URL is not set");
   }
 
-  //   const { directus, readItems } = useDirectus();
+    const { directus, readItems } = directusSdk();
 
   try {
     const pagesPromise = directus.request(

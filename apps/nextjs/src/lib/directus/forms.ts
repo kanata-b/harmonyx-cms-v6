@@ -1,9 +1,9 @@
-import { createItem, uploadFiles, withToken } from "@directus/sdk";
-import { directus } from "./directus";
+
 import type {
   FormSubmission,
   FormSubmissionValue,
 } from "@/types/directus-schema";
+import { directusSdk } from "./directus";
 
 export const submitForm = async (
   formId: string,
@@ -11,7 +11,7 @@ export const submitForm = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>
 ) => {
-  // const { directus, uploadFiles, createItem, withToken } = useDirectus();
+  const { directus, uploadFiles, createItem, withToken } = directusSdk();
   const TOKEN = process.env.DIRECTUS_FORM_TOKEN;
 
   if (!TOKEN) {
