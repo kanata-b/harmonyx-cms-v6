@@ -7,6 +7,7 @@ import VisualEditingLayout from "@/components/layout/VisualEditingLayout";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { fetchSiteData } from "@/lib/directus/fetchers";
 import { getDirectusAssetURL } from "@/lib/directus/directus-utils";
+import { Navigation } from "@/types/directus-schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { globals } = await fetchSiteData();
@@ -48,8 +49,8 @@ export default async function RootLayout({
       <body className="antialiased font-sans flex flex-col min-h-screen">
         <ThemeProvider>
           <VisualEditingLayout
-            headerNavigation={headerNavigation}
-            footerNavigation={footerNavigation}
+            headerNavigation={headerNavigation as Navigation}
+            footerNavigation={footerNavigation as Navigation}
             globals={globals}
           >
             <main className="flex-grow">{children}</main>
