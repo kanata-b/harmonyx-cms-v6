@@ -1,7 +1,7 @@
 export { default as BaseBlock } from './BaseBlock';
 export { default as Button } from './Button';
 export { default as ButtonGroup } from './ButtonGroup';
-export { default as CardItem } from './CardItem';
+export { default as ForexAccountCard } from './ForexAccountCard';
 export { default as Form } from './Form';
 export { default as Gallery } from './Gallery';
 export { default as Hero } from './Hero';

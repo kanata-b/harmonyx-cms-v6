@@ -6,6 +6,7 @@ import Gallery from "@/components/blocks/Gallery";
 import Pricing from "@/components/blocks/Pricing";
 import Posts from "@/components/blocks/Posts";
 import Form from "@/components/blocks/Form";
+import ForexAccount from "./ForexAccount";
 
 interface BaseBlockProps {
   block: {
@@ -23,6 +24,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
     block_pricing: Pricing,
     block_posts: Posts,
     block_form: Form,
+    block_forex_account: ForexAccount,
   };
 
   const Component = components[block.collection];
@@ -31,7 +33,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
     return null;
   }
   const itemId = (block.item as { id: string }).id;
-
+  console.log("Rendering block:", block.collection, "with item ID:", itemId);
   return <Component data={block.item} blockId={block.id} itemId={itemId} />;
 };
 

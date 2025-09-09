@@ -143,6 +143,21 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
                       ],
                     },
                   ],
+                  block_forex_account : [
+                    "id",
+                    "tagline",
+                    "headline",
+                    "status",
+                    {
+                      cards: [
+                        "id",
+                        "banner_image",
+                        "banner_alt_text",
+                        "title",
+                        "description",
+                      ]
+                    },
+                  ]
                 },
               },
             ],
@@ -157,11 +172,13 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
     if (!pageData.length) {
       throw new Error("Page not found");
     }
-
+   
     const page = pageData[0];
 
     if (Array.isArray(page.blocks)) {
       for (const block of page.blocks as PageBlock[]) {
+        console.log('block.collection:', block.collection);
+        console.log('block.item:', block.item);
         if (
           block.collection === "block_posts" &&
           typeof block.item === "object" &&

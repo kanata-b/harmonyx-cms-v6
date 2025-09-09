@@ -71,9 +71,9 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: 'https',
-				hostname: 'gofx.com',
+				hostname: 'www.gofx.com',
 				port: '',
-				pathname: '/assets/**',
+				pathname: '/wp-content/**',
 			}
 		],
 		// formats: ["image/webp", "image/avif" ],

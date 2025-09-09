@@ -403,6 +403,7 @@ export interface PageBlock {
     | BlockPost
     | BlockGallery
     | BlockPricing
+    | BlockForexAccount
     | string
     | null;
   /** @description The collection (type of block). */
@@ -950,6 +951,97 @@ export interface DirectusExtension {
   bundle?: string | null;
 }
 
+
+export interface BlockForexAccount  {
+  cards: unknown[] | BlockForexAccountCard[];
+  date_created?: string | null;
+  date_updated?: string | null;
+  headline?: string | null;
+  id: string;
+  meta_header_block_forex_account: string;
+  status: string;
+  tagline?: string | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+};
+
+export interface BlockForexAccountCard {
+  action_href?: string | null;
+  banner_alt_text?: string | null;
+  banner_image?: string | DirectusFile | null;
+  block_forex_acccount_id?: string | BlockForexAccount | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  description: unknown[] | BlockForexAccountCardDescriptionTranslations[];
+  detail: unknown[] | BlockForexCardDetails[];
+  id: string;
+  title?: string | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+};
+
+export interface BlockForexAccountCardDescriptionTranslations {
+  block_forex_account_card_id?: string | BlockForexAccountCard | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  description?: string | null;
+  id: string;
+  languages_code?: string | Language | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+};
+
+export interface BlockForexCardDetailItems {
+  block_forex_card_detail_id?: string | BlockForexCardDetails | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  label: unknown[] | BlockForexCardDetailLabelTranslations[];
+  sort?: number | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+  value: unknown[] | BlockForexCardDetailValueTranslations[];
+};
+
+export interface BlockForexCardDetailLabelTranslations {
+  block_forex_card_detail_item_id?: string | BlockForexCardDetailItems | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  label?: string | null;
+  languages_code?: string | Language | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+};
+
+export interface BlockForexCardDetails {
+  block_forex_account_card_id?: string | BlockForexAccountCard | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  items: unknown[] | BlockForexCardDetailItems[];
+  layout?: string | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+};
+
+export interface BlockForexCardDetailValueTranslations {
+  block_forex_card_detail_item_id?: string | BlockForexCardDetailItems | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  languages_code?: string | Language | null;
+  user_created?: string | DirectusUser | null;
+  user_updated?: string | DirectusUser | null;
+  value?: string | null;
+};
+
+export interface Language {
+  code: string;
+  direction?: string | null;
+  name?: string | null;
+};
+
 export interface Schema {
   ai_prompts: AiPrompt[];
   block_button: BlockButton[];
@@ -1000,6 +1092,14 @@ export interface Schema {
   directus_translations: DirectusTranslation[];
   directus_versions: DirectusVersion[];
   directus_extensions: DirectusExtension[];
+  block_forex_account: BlockForexAccount[];
+  block_forex_account_card: BlockForexAccountCard[];
+  block_forex_account_card_description_translations: BlockForexAccountCardDescriptionTranslations[];
+  block_forex_card_detail_items: BlockForexCardDetailItems[];
+  block_forex_card_detail_label_translations: BlockForexCardDetailLabelTranslations[];
+  block_forex_card_details: BlockForexCardDetails[];
+  block_forex_card_detail_value_translations: BlockForexCardDetailValueTranslations[];
+  languages: Language[];
 }
 
 export enum CollectionNames {
@@ -1052,4 +1152,12 @@ export enum CollectionNames {
   directus_translations = "directus_translations",
   directus_versions = "directus_versions",
   directus_extensions = "directus_extensions",
+  block_forex_account = "block_forex_account",
+  block_forex_account_card = "block_forex_account_card",
+  block_forex_account_card_description_translations = "block_forex_account_card_description_translations",
+  block_forex_card_detail_items = "block_forex_card_detail_items",
+  block_forex_card_detail_label_translations = "block_forex_card_detail_label_translations",
+  block_forex_card_details = "block_forex_card_details",
+  block_forex_card_detail_value_translations = "block_forex_card_detail_value_translations",
+  languages = "languages"
 }
