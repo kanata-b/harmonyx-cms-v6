@@ -2,13 +2,11 @@ import "@/styles/globals.css";
 import "@/styles/fonts.css";
 import { ReactNode } from "react";
 
-
 export default async function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-
   return (
     <html
       lang="en"

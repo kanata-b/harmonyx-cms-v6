@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }) => ({
           url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
           lastModified: post.published_at || new Date().toISOString(),
-        })
+        })  
       );
 
     return [...pageUrls, ...postUrls];

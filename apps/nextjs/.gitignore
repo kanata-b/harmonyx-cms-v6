@@ -85,3 +85,5 @@ node_modules/
 tmp/
 temp/
 
+# Open Next
+.open-next

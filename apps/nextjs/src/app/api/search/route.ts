@@ -1,9 +1,10 @@
-import { directus } from "@/lib/directus/directus";
+import { directusSdk } from "@/lib/directus/directus";
 import { Page, Post } from "@/types/directus-schema";
 import { readItems } from "@directus/sdk";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  const { directus } = directusSdk()
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search");
 

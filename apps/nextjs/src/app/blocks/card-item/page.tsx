@@ -1,9 +1,11 @@
 "use client";
 
 import ForexAccountCard from '@/components/blocks/ForexAccountCard';
+import NoSSR from '@/components/shared/NoSSR';
 
 export default function CardItemPage() {
   return (
+    <NoSSR>
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
@@ -151,6 +153,6 @@ export default function CardItemPage() {
 
       </div>
     </div>
-
+    </NoSSR>
   );
 }
